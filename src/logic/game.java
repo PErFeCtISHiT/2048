@@ -1,7 +1,7 @@
 package logic;
 
 public class game {
-    private panel p = new panel();
+    public panel p = new panel();
     public boolean move(int way){
         switch (way){
             case 0://向上
@@ -44,5 +44,8 @@ public class game {
         if(!p.generate())
             return false;
         return true;
+    }
+    public String get(int i ,int j){
+        return p.get(i,j);
     }
 }

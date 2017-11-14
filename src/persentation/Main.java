@@ -17,7 +17,8 @@ public class Main extends Application {
     Button start;
     Button quit;
     Image image;
-    game g = new game();
+    Scene init;
+    game gam;
     Scene gamescene;
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -25,11 +26,11 @@ public class Main extends Application {
         stage.setTitle("2048");
         label = new Label("have fun");
         start = new Button();
-        start.setText("begin your game");
+        start.setText("开始");
         start.setPrefSize(150,100);
-        start.setOnAction(e -> stage.setScene(gamescene));
+        start.setOnAction(e -> f());
         quit = new Button();
-        quit.setText("quit");
+        quit.setText("退出");
         quit.setPrefSize(150,100);
         quit.setOnAction(e -> stage.close());
         GridPane grid = new GridPane();
@@ -40,7 +41,14 @@ public class Main extends Application {
         GridPane.setConstraints(start,0,1);
         GridPane.setConstraints(quit,0,2);
         grid.getChildren().addAll(label,start,quit);
-        Scene init = new Scene(grid,1000,800);
+        init = new Scene(grid,1000,800);
+        init.getStylesheets().add("css.css");
+        stage.setScene(init);
+        stage.show();
+    }
+
+    private void f() {
+        gam = new game();
         GridPane g = new GridPane();
         g.setPadding(new Insets(10,10,10,10));
         g.setVgap(8);
@@ -48,17 +56,26 @@ public class Main extends Application {
         Label label[][] = new Label[4][4];
         for(int i = 0;i < 4;i++){
             for(int j = 0;j < 4;j++){
-                label[i][j] = new Label("i");
+                label[i][j] = new Label(gam.get(i,j));
                 label[i][j].setPrefSize(150,150);
                 GridPane.setConstraints(label[i][j],i,j);
                 g.getChildren().add(label[i][j]);
             }
         }
+        Label score = new Label("得分");
+        Label con = new Label();
+        GridPane.setConstraints(score,5,0);
+        GridPane.setConstraints(con,5,1);
+        Button ret = new Button("返回");
+        GridPane.setConstraints(ret,5,2);
+        ret.setOnAction(e -> stage.setScene(init));
+        Button exit = new Button("退出");
+        GridPane.setConstraints(exit,5,3);
+        exit.setOnAction(e -> stage.close());
+        g.getChildren().addAll(score,con,ret,exit);
         gamescene = new Scene(g,1000,800);
-        init.getStylesheets().add("css.css");
         gamescene.getStylesheets().add("css.css");
-        stage.setScene(init);
-        stage.show();
+        stage.setScene(gamescene);
     }
 
 
